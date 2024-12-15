@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '6.0.26'
+}
+
+group = 'ru.otus'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.1'
+    seleniumVersion = '4.25.0'
+    webdriverManagerVersion = '5.9.2'
+    assertjVersion = '3.26.3'
+    guiceVersion = '7.0.0'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+checkstyle {
+    toolVersion = '10.18.2'
+    configFile = file("src/main/resources/checkstyle.xml")
+}
+
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
+    implementation "org.assertj:assertj-core:${assertjVersion}"
+
+    implementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+    implementation "io.github.bonigarcia:webdrivermanager:${webdriverManagerVersion}"
+    implementation "com.google.inject:guice:${guiceVersion}"
+    implementation 'org.jsoup:jsoup:1.18.3'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release.set(21)
+}
+
+tasks.named("spotbugsMain").configure {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+tasks.named("spotbugsTest").configure {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+tasks.named("test") {
+    dependsOn("checkstyleMain", "checkstyleTest", "spotbugsMain", "spotbugsTest")
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'browser', System.getProperty('browser', 'chrome')
+    systemProperty 'browserVersion', System.getProperty('browserVersion', 'latest')
+    systemProperty 'browserSize', System.getProperty('browserSize', '1920x1080')
+    systemProperty 'baseUrl', System.getProperty('baseUrl', 'https://otus.ru')
+}
