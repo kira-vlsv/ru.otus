@@ -3,15 +3,17 @@ package components.staticcomponent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.components.Component;
+import com.google.inject.Inject;
+import context.ScenarioContext;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.List;
 
 @Component("xpath://p[text() = 'Направление']/ancestor::div[2]")
 public class CategoriesSideMenu extends BaseStaticComponent<CategoriesSideMenu> {
-    public CategoriesSideMenu(WebDriver driver) {
-        super(driver);
+    @Inject
+    public CategoriesSideMenu(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
     public List<WebElement> getCategories() {

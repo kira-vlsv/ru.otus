@@ -1,6 +1,7 @@
 package wait;
 
 import exceptions.ElementVisibilityException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,10 +27,10 @@ public class ElementWait {
         }
     }
 
-    public boolean waitForInvisibility(WebElement element) {
+    public boolean waitForInvisibility(By locator) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            return wait.until(ExpectedConditions.invisibilityOf(element));
+            return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
         } catch (TimeoutException e) {
             throw new ElementVisibilityException("Element is still visible within the specified timeout.");
         }

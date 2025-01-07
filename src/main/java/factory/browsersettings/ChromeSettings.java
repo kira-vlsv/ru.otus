@@ -5,7 +5,8 @@ import org.openqa.selenium.remote.AbstractDriverOptions;
 
 public class ChromeSettings implements IBrowserSettings {
 
-    private final String browserSize = System.getProperty("browserSize");
+    private final String browserSize = "1920x1080";
+//    private final String browserSize = System.getProperty("browserSize");
 
     @Override
     public AbstractDriverOptions settings() {

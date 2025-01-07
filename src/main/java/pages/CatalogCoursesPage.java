@@ -3,10 +3,11 @@ package pages;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.Path;
+import com.google.inject.Inject;
+import context.ScenarioContext;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import java.io.IOException;
@@ -19,8 +20,10 @@ import java.util.stream.Collectors;
 
 @Path("/catalog/courses")
 public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
-    public CatalogCoursesPage(WebDriver driver) {
-        super(driver);
+
+    @Inject
+    public CatalogCoursesPage(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", Locale.forLanguageTag("ru"));
@@ -88,9 +91,10 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
     }
 
     public void checkCourseStartDate(WebElement courseItem) throws IOException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru"));
         Document pageDocument = getPageDocument(courseItem);
-        String dateText = pageDocument.selectXpath("//p[contains(text(), 'месяц')]/ancestor::div[1]/preceding-sibling::div//p").text();
-        LocalDate date = LocalDate.parse(dateText + ", " + LocalDate.now().getYear(), formatter);
+        String dateText = pageDocument.selectXpath("(//p[contains(text(), 'месяц')]/ancestor::div[1]/preceding-sibling::div//p)[1]").text();
+        LocalDate date = LocalDate.parse(dateText, dateTimeFormatter);
         assertThat(date)
                 .as("Course page start date should be same as course tile start date")
                 .isEqualTo(getCourseStartDate(courseItem));

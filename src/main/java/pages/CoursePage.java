@@ -1,12 +1,14 @@
 package pages;
 
 import annotations.PathTemplate;
-import org.openqa.selenium.WebDriver;
+import com.google.inject.Inject;
+import context.ScenarioContext;
 
 @PathTemplate("/lessons/%s")
 public class CoursePage extends BasePage<CoursePage> {
 
-    public CoursePage(WebDriver driver) {
-        super(driver);
+    @Inject
+    public CoursePage(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 }

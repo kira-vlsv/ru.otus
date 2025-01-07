@@ -3,8 +3,9 @@ package components.popups;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.components.ComponentTemplate;
+import com.google.inject.Inject;
 import components.BaseComponent;
-import org.openqa.selenium.WebDriver;
+import context.ScenarioContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.List;
 @ComponentTemplate("xpath://span[contains(text(), '%s')]/ancestor::div/following-sibling::div[1]")
 public class HeaderSubMenuPopup extends BaseComponent<HeaderSubMenuPopup> implements IPopup<HeaderSubMenuPopup> {
 
-    public HeaderSubMenuPopup(WebDriver driver) {
-        super(driver);
+    @Inject
+    public HeaderSubMenuPopup(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
     @FindBy(xpath = "//nav//a[contains(@href, '/categories')]")
@@ -29,7 +31,7 @@ public class HeaderSubMenuPopup extends BaseComponent<HeaderSubMenuPopup> implem
 
     @Override
     public void popupShouldNotBeVisible(String... values) {
-        assertThat(elementWait.waitForInvisibility(getComponentEntity(values)))
+        assertThat(elementWait.waitForInvisibility(getComponentBy(values)))
                 .as("Element should not be visible")
                 .isTrue();
     }
@@ -44,5 +46,4 @@ public class HeaderSubMenuPopup extends BaseComponent<HeaderSubMenuPopup> implem
         category.click();
         return categoryName;
     }
-
 }

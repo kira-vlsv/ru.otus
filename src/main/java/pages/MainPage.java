@@ -1,12 +1,14 @@
 package pages;
 
 import annotations.Path;
-import org.openqa.selenium.WebDriver;
+import com.google.inject.Inject;
+import context.ScenarioContext;
 
 @Path("/")
 public class MainPage extends BasePage<MainPage> {
 
-    public MainPage(WebDriver driver) {
-        super(driver);
+    @Inject
+    public MainPage(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 }

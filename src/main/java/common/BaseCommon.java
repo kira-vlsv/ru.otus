@@ -1,5 +1,7 @@
 package common;
 
+import com.google.inject.Inject;
+import context.ScenarioContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -15,8 +17,9 @@ public abstract class BaseCommon<T> {
     protected ElementWait elementWait;
     protected Random random;
 
-    public BaseCommon(WebDriver driver) {
-        this.driver = driver;
+    @Inject
+    public BaseCommon(ScenarioContext scenarioContext) {
+        this.driver = scenarioContext.getWebDriver();
         actions = new Actions(driver);
         elementWait = new ElementWait(driver);
         random = new Random();

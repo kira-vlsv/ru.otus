@@ -9,8 +9,10 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverFactory {
 
-    private static final String BROWSER_NAME = System.getProperty("browser");
-    private static final String BROWSER_VERSION = System.getProperty("browserVersion");
+    private static final String BROWSER_NAME = "chrome";
+    //    private static final String BROWSER_NAME = System.getProperty("browser");
+    private static final String BROWSER_VERSION = "latest";
+//    private static final String BROWSER_VERSION = System.getProperty("browserVersion");
 
     public static WebDriver create() {
         switch (BROWSER_NAME.trim().replaceAll("[^a-zA-Z]", "").toLowerCase()) {

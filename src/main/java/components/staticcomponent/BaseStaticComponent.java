@@ -1,11 +1,14 @@
 package components.staticcomponent;
 
+import com.google.inject.Inject;
 import components.BaseComponent;
-import org.openqa.selenium.WebDriver;
+import context.ScenarioContext;
 
 public abstract class BaseStaticComponent<T> extends BaseComponent<T> {
-    public BaseStaticComponent(WebDriver driver) {
-        super(driver);
+
+    @Inject
+    public BaseStaticComponent(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
 }

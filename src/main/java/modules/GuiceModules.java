@@ -6,54 +6,54 @@ import com.google.inject.Singleton;
 import components.popups.HeaderSubMenuPopup;
 import components.staticcomponent.CategoriesSideMenu;
 import components.staticcomponent.HeaderMenu;
-import factory.WebDriverFactory;
-import org.openqa.selenium.WebDriver;
+import context.ScenarioContext;
 import pages.CatalogCoursesPage;
 import pages.CoursePage;
 import pages.MainPage;
 
 public class GuiceModules extends AbstractModule {
 
-    private WebDriver driver = WebDriverFactory.create();
+    private ScenarioContext scenarioContext = new ScenarioContext();
 
+    @Singleton
     @Provides
-    public WebDriver getWebDriver() {
-        return driver;
+    public ScenarioContext getScenarioContext() {
+        return this.scenarioContext;
     }
 
     @Singleton
     @Provides
     public MainPage getMainPage() {
-        return new MainPage(driver);
+        return new MainPage(scenarioContext);
     }
 
     @Singleton
     @Provides
     public CoursePage getCoursePage() {
-        return new CoursePage(driver);
+        return new CoursePage(scenarioContext);
     }
 
     @Singleton
     @Provides
     public CatalogCoursesPage getCatalogCoursesPage() {
-        return new CatalogCoursesPage(driver);
+        return new CatalogCoursesPage(scenarioContext);
     }
 
     @Singleton
     @Provides
     public HeaderMenu getHeaderMenu() {
-        return new HeaderMenu(driver);
+        return new HeaderMenu(scenarioContext);
     }
 
     @Singleton
     @Provides
     public HeaderSubMenuPopup getHeaderSubMenuPopup() {
-        return new HeaderSubMenuPopup(driver);
+        return new HeaderSubMenuPopup(scenarioContext);
     }
 
     @Singleton
     @Provides
     public CategoriesSideMenu getCategoriesSideMenu() {
-        return new CategoriesSideMenu(driver);
+        return new CategoriesSideMenu(scenarioContext);
     }
 }

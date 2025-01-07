@@ -2,19 +2,21 @@ package components;
 
 import annotations.components.Component;
 import annotations.components.ComponentTemplate;
+import com.google.inject.Inject;
 import common.BaseCommon;
-import exceptions.InvalidPathParametersException;
+import context.ScenarioContext;
 import exceptions.InvalidComponentSelectorException;
+import exceptions.InvalidPathParametersException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class BaseComponent<T> extends BaseCommon<T> {
 
-    public BaseComponent(WebDriver driver) {
-        super(driver);
+    @Inject
+    public BaseComponent(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
     public By getComponentBy(String... values) {

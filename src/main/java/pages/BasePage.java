@@ -4,20 +4,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.Path;
 import annotations.PathTemplate;
+import com.google.inject.Inject;
 import common.BaseCommon;
+import context.ScenarioContext;
 import exceptions.InvalidPathException;
 import exceptions.InvalidPathParametersException;
 import exceptions.MissingPathTemplateException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public abstract class BasePage<T> extends BaseCommon<T> {
 
-    private final String baseUrl = System.getProperty("baseUrl").replaceAll("/$", "");
+//    private final String baseUrl = System.getProperty("baseUrl").replaceAll("/$", "");
+    private final String baseUrl = "https://otus.ru".replaceAll("/$", "");
 
-    public BasePage(WebDriver driver) {
-        super(driver);
+    @Inject
+    public BasePage(ScenarioContext scenarioContext) {
+        super(scenarioContext);
     }
 
     @FindBy(css = "h1")
