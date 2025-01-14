@@ -4,6 +4,5 @@
 #### Для запуска тестов:
 
 ```
-gradle build
-gradle test
+gradle cucumberCli
 ```
