@@ -27,11 +27,6 @@ java {
     }
 }
 
-checkstyle {
-    toolVersion = '10.18.2'
-    configFile = file("src/main/resources/checkstyle.xml")
-}
-
 dependencies {
     // JUnit
     implementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
@@ -62,6 +57,16 @@ tasks.withType(JavaCompile).configureEach {
     options.release.set(21)
 }
 
+checkstyle {
+    toolVersion = '10.18.2'
+    configFile = file("src/main/resources/checkstyle.xml")
+}
+
+spotbugs {
+    toolVersion = '4.8.6'
+    excludeFilter = file("${project.rootDir}/src/main/resources/excludeFilter.xml")
+}
+
 tasks.named("spotbugsMain").configure {
     reports {
         html.required.set(true)
@@ -76,21 +81,30 @@ tasks.named("spotbugsTest").configure {
     }
 }
 
-tasks.withType(Checkstyle) {
+tasks.withType(Checkstyle).configureEach {
     reports {
         html.required.set(true)
         xml.required.set(false)
     }
 }
 
-//tasks.named("test") {
-//    dependsOn("checkstyleMain", "checkstyleTest", "spotbugsMain", "spotbugsTest")
-//}
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
 
-test {
-    useJUnitPlatform()
+tasks.register('cucumberCli', JavaExec) {
+    dependsOn assemble, testClasses
+    mainClass = "io.cucumber.core.cli.Main"
+    classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+    args = ['--glue', 'otus', 'src/test/resources/otus']
     systemProperty 'browser', System.getProperty('browser', 'chrome')
     systemProperty 'browserVersion', System.getProperty('browserVersion', 'latest')
     systemProperty 'browserSize', System.getProperty('browserSize', '1920x1080')
     systemProperty 'baseUrl', System.getProperty('baseUrl', 'https://otus.ru')
+}
+
+tasks.named("cucumberCli") {
+    dependsOn("checkstyleMain", "checkstyleTest", "spotbugsMain", "spotbugsTest")
 }
