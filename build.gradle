@@ -13,7 +13,7 @@ repositories {
 
 ext {
     junitVersion = '5.10.1'
-    seleniumVersion = '4.25.0'
+    seleniumVersion = '4.27.0'
     webdriverManagerVersion = '5.9.2'
     assertjVersion = '3.26.3'
     guiceVersion = '7.0.0'
@@ -73,7 +73,18 @@ tasks.named("test") {
 test {
     useJUnitPlatform()
     systemProperty 'browser', System.getProperty('browser', 'chrome')
-    systemProperty 'browserVersion', System.getProperty('browserVersion', 'latest')
+    systemProperty 'browserVersion', System.getProperty('browserVersion', '128.0')
     systemProperty 'browserSize', System.getProperty('browserSize', '1920x1080')
     systemProperty 'baseUrl', System.getProperty('baseUrl', 'https://otus.ru')
+    systemProperty 'isRemoteWebDriver', System.getProperty('isRemoteWebDriver', 'true')
+    systemProperty 'isMobile', System.getProperty('isMobile', 'false')
+    systemProperty 'remoteUrl', System.getProperty('remoteUrl', 'http://localhost/wd/hub')
+
+    systemProperties += [
+            'junit.jupiter.execution.parallel.enabled'                 : true,
+            'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
+            'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
+            'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
+            'junit.jupiter.execution.parallel.config.fixed.parallelism': '2'
+    ]
 }

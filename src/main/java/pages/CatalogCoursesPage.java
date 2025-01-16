@@ -12,9 +12,11 @@ import org.openqa.selenium.support.FindBy;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Path("/catalog/courses")
@@ -89,10 +91,25 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
 
     public void checkCourseStartDate(WebElement courseItem) throws IOException {
         Document pageDocument = getPageDocument(courseItem);
-        String dateText = pageDocument.selectXpath("//p[contains(text(), 'месяц')]/ancestor::div[1]/preceding-sibling::div//p").text();
-        LocalDate date = LocalDate.parse(dateText + ", " + LocalDate.now().getYear(), formatter);
-        assertThat(date)
+        String dateText = pageDocument.selectXpath("(//p[contains(text(), 'месяц')]/ancestor::div[1]/preceding-sibling::div//p)[1]").text();
+        assertThat(parseDate(dateText))
                 .as("Course page start date should be same as course tile start date")
                 .isEqualTo(getCourseStartDate(courseItem));
+    }
+
+    private static LocalDate parseDate(String input) {
+        DateTimeFormatter formatterWithYear = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru"));
+
+        try {
+            LocalDate date = LocalDate.parse(input + " " + LocalDate.now().getYear(), formatterWithYear);
+            return Optional.of(date).get();
+        } catch (DateTimeParseException e) {
+            try {
+                LocalDate date = LocalDate.parse(input, formatterWithYear);
+                return Optional.of(date).get();
+            } catch (DateTimeParseException ex) {
+                throw new IllegalArgumentException("Invalid date format: " + input, ex);
+            }
+        }
     }
 }
