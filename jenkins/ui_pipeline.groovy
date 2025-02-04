@@ -1,7 +1,7 @@
 timeout(time: 60, unit: 'MINUTES') {
     node('maven') {
 
-        def config = readYaml text: $CONFIG
+        def config = readYaml text: $YAML_CONFIG
         config.each { k, v ->
             env."${k}" = v
         }
