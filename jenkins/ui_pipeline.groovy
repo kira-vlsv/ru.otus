@@ -1,5 +1,5 @@
 timeout(time: 60, unit: 'MINUTES') {
-    node('maven') {
+    node('gradle') {
 
         def config = readYaml text: params.YAML_CONFIG
         config.each { k, v ->
