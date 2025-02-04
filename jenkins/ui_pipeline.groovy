@@ -14,7 +14,7 @@ timeout(time: 60, unit: 'MINUTES') {
             status = sh script: "gradle test -DBROWSER=$env.BROWSER -DBASE_URL=$env.BASE_URL", returnStatus: true
 
             if(status > 0) {
-                currentBuild.status = 'UNSTABLE'
+                currentBuild.result = 'UNSTABLE'
             }
         }
 
