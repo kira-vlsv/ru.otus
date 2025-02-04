@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import pages.CatalogCoursesPage;
 import pages.CoursePage;
-
 import java.io.IOException;
 
 @UITest
