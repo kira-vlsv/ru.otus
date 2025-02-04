@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.components.ComponentTemplate;
 import components.BaseComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +39,7 @@ public class HeaderSubMenuPopup extends BaseComponent<HeaderSubMenuPopup> implem
         return categoriesMenuItems.get(random.nextInt(categoriesMenuItems.size()));
     }
 
+    @Step("Click on random category")
     public String clickOnRandomCategory() {
         WebElement category = getRandomCategoryItem();
         String categoryName = category.getText().split(" \\(")[0];

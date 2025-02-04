@@ -3,6 +3,7 @@ package components.staticcomponent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.components.Component;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,6 +27,7 @@ public class CategoriesSideMenu extends BaseStaticComponent<CategoriesSideMenu> 
                 .toList();
     }
 
+    @Step("Check selected categories")
     public void checkSelectedCategories(List<String> expectedCategories) {
         assertThat(getSelectedCategories())
                 .as("Categories do not match")

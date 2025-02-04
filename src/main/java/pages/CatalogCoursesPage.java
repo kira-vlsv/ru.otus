@@ -3,6 +3,7 @@ package pages;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.Path;
+import io.qameta.allure.Step;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
@@ -45,10 +46,12 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
                 .orElseThrow(() -> new RuntimeException("Course with name '" + name + "' was not found"));
     }
 
+    @Step("Get earliest courses")
     public List<WebElement> getEarliestCourses() {
         return getCoursesByExtremeDate(true);
     }
 
+    @Step("Get latest courses")
     public List<WebElement> getLatestCourses() {
         return getCoursesByExtremeDate(false);
     }
@@ -82,6 +85,7 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
         return LocalDate.parse(dateText, formatter);
     }
 
+    @Step("Verify course title")
     public void checkCourseTitle(WebElement courseItem) throws IOException {
         Document pageDocument = getPageDocument(courseItem);
         assertThat(pageDocument.select("h1").text())
@@ -89,6 +93,7 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
                 .isEqualTo(getCourseTitle(courseItem));
     }
 
+    @Step("Verify course start date")
     public void checkCourseStartDate(WebElement courseItem) throws IOException {
         Document pageDocument = getPageDocument(courseItem);
         String dateText = pageDocument.selectXpath("(//p[contains(text(), 'месяц')]/ancestor::div[1]/preceding-sibling::div//p)[1]").text();

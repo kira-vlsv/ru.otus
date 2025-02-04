@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'com.github.spotbugs' version '6.0.26'
+    id "io.qameta.allure" version "2.8.1"
 }
 
 group = 'ru.otus'
@@ -17,6 +18,7 @@ ext {
     webdriverManagerVersion = '5.9.2'
     assertjVersion = '3.26.3'
     guiceVersion = '7.0.0'
+    allureVersion = '2.29.0'
 }
 
 java {
@@ -28,6 +30,16 @@ java {
 checkstyle {
     toolVersion = '10.18.2'
     configFile = file("src/main/resources/checkstyle.xml")
+}
+
+allure {
+    version = allureVersion
+    autoconfigure = true
+    aspectjweaver = true
+    configuration = "implementation"
+    useJUnit5 {
+        version = allureVersion
+    }
 }
 
 dependencies {
@@ -85,6 +97,7 @@ test {
             'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
             'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
-            'junit.jupiter.execution.parallel.config.fixed.parallelism': '2'
+            'junit.jupiter.execution.parallel.config.fixed.parallelism': '2',
+            'junit.jupiter.execution.parallel.config.fixed.threads'    : '2'
     ]
 }

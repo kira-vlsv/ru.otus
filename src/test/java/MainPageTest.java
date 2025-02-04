@@ -4,6 +4,7 @@ import annotations.UITest;
 import components.popups.HeaderSubMenuPopup;
 import components.staticcomponent.CategoriesSideMenu;
 import components.staticcomponent.HeaderMenu;
+import io.qameta.allure.AllureId;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
@@ -25,6 +26,7 @@ public class MainPageTest {
     private CategoriesSideMenu categoriesSideMenu;
 
     @Test
+    @AllureId("3")
     public void navigateToRandomCourseFromHeaderMenu() {
         mainPage.open();
         headerMenu.clickOnMenuItem(STUDY);

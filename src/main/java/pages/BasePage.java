@@ -8,6 +8,7 @@ import common.BaseCommon;
 import exceptions.InvalidPathException;
 import exceptions.InvalidPathParametersException;
 import exceptions.MissingPathTemplateException;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,6 +24,7 @@ public abstract class BasePage<T> extends BaseCommon<T> {
     @FindBy(css = "h1")
     public WebElement header;
 
+    @Step("Open page")
     public T open() {
         driver.get(baseUrl + getPath());
         return (T) this;
