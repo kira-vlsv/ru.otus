@@ -2,9 +2,9 @@ timeout(time: 60, unit: 'MINUTES') {
     node('maven') {
 
         def config = readYaml text: $CONFIG
-        config.each(k, v -> {
-            env.setProperty(k, v)
-        })
+        config.each { k, v ->
+            env."${k}" = v
+        }
 
         stage('Checkout') {
             checkout scm
