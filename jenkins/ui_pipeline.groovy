@@ -11,10 +11,7 @@ timeout(time: 60, unit: 'MINUTES') {
         }
 
         stage('Run UI tests') {
-            status = sh (
-                "gradle test -DBROWSER=$env.BROWSER -DBASE_URL=$env.BASE_URL",
-                returnStatus: true
-            )
+            status = sh script: "gradle test -DBROWSER=$env.BROWSER -DBASE_URL=$env.BASE_URL", returnStatus: true
 
             if(status > 0) {
                 currentBuild.status = 'UNSTABLE'
