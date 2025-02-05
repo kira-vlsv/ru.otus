@@ -56,6 +56,7 @@ public abstract class BasePage<T> extends BaseCommon<T> {
         return String.format(template, (Object[]) path);
     }
 
+    @Step("Verify page title : [{title}]")
     public T pageTitleShouldBeAs(String title) {
         assertThat(header.getText())
                 .as(String.format("Page title should be %s", title))

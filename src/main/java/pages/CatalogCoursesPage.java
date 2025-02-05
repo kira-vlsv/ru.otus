@@ -31,6 +31,7 @@ public class CatalogCoursesPage extends BasePage<CatalogCoursesPage> {
     @FindBy(css = "section:has(h1) a[href*='lessons']")
     private List<WebElement> courseItems;
 
+    @Step("Click course by name")
     public void clickCourseByName(String name) {
         actions.moveToElement(getCourseByName(name)).click().perform();
     }
