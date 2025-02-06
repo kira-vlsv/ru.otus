@@ -21,7 +21,7 @@ timeout(time: 60, unit: 'MINUTES') {
             allure(disabled: false,
                     includeProperties: false,
                     jdk: '',
-                    results: [[path: "./build/allure-results"]],
+                    results: [[path: "./target/allure-results"]],
                     reportBuildPolicy: 'ALWAYS',
                     commandline: 'allure')
         }
