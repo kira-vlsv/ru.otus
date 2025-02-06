@@ -23,7 +23,7 @@ timeout(time: 60, unit: 'MINUTES') {
                 disabled: false,
                 includeProperties: false,
                 jdk: '',
-                report: "${env.WORKSPACE}/build/allure-results",
+                results: [[path: "${env.SERVICE}/build/allure-results"]],
                 reportBuildPolicy: 'ALWAYS'
             )
         }
