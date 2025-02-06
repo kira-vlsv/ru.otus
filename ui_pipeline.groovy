@@ -17,13 +17,13 @@ timeout(time: 60, unit: 'MINUTES') {
             }
         }
 
-        sh "ls -la ."
+        sh "ls -la ./build"
 
         stage('Publish allure report') {
             allure(disabled: false,
                     includeProperties: false,
                     jdk: '',
-                    results: [[path: "./target/allure-results"]],
+                    results: [[path: "./build/allure-results"]],
                     reportBuildPolicy: 'ALWAYS',
                     commandline: 'allure')
         }
