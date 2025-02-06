@@ -17,6 +17,8 @@ timeout(time: 60, unit: 'MINUTES') {
             }
         }
 
+        sh "ls -la ."
+
         stage('Publish allure report') {
             allure(disabled: false,
                     includeProperties: false,
