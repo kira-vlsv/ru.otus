@@ -17,32 +17,13 @@ timeout(time: 60, unit: 'MINUTES') {
             }
         }
 
-//        stage('Publish allure report') {
-//            allure(disabled: false,
-//                    includeProperties: false,
-//                    jdk: '',
-//                    results: [[path: "./build/allure-results"]],
-//                    reportBuildPolicy: 'ALWAYS',
-//                    commandline: 'allure')
-//        }
-
-        stage('ALLURE') {
-            steps {
-                sh """
-                ls -a ${WORKSPACE}
-                """
-                script {
-                    ws("$WORKSPACE/build/") {
-                        allure([
-                                includeProperties: false,
-                                jdk              : '',
-                                reportBuildPolicy: 'ALWAYS',
-                                results          : [[path: "allure-results"]],
-                                commandline      : 'allure'
-                        ])
-                    }
-                }
-            }
+        stage('Publish allure report') {
+            allure(disabled: false,
+                    includeProperties: false,
+                    jdk: '',
+                    results: [[path: "./build/allure-results"]],
+                    reportBuildPolicy: 'ALWAYS',
+                    commandline: 'allure')
         }
     }
 }
