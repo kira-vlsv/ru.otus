@@ -32,16 +32,17 @@ timeout(time: 60, unit: 'MINUTES') {
                 ls -a ${WORKSPACE}
                 """
                 script {
-                    ws("$WORKSPACE/build/"){
+                    ws("$WORKSPACE/build/") {
                         allure([
                                 includeProperties: false,
-                                jdk: '',
+                                jdk              : '',
                                 reportBuildPolicy: 'ALWAYS',
-                                results: [[path: "allure-results"]],
-                                commandline: 'allure'
+                                results          : [[path: "allure-results"]],
+                                commandline      : 'allure'
                         ])
                     }
                 }
             }
+        }
     }
 }
