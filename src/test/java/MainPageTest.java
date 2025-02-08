@@ -5,12 +5,15 @@ import components.popups.HeaderSubMenuPopup;
 import components.staticcomponent.CategoriesSideMenu;
 import components.staticcomponent.HeaderMenu;
 import io.qameta.allure.AllureId;
+import io.qameta.allure.Feature;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 import java.util.List;
 
 @UITest
+@Feature("Main page")
 public class MainPageTest {
 
     @Inject
@@ -27,7 +30,8 @@ public class MainPageTest {
 
     @Test
     @AllureId("3")
-    public void navigateToRandomCourseFromHeaderMenu() {
+    @DisplayName("Navigate to a random category from header menu")
+    public void navigateToRandomCategoryFromHeaderMenu() {
         mainPage.open();
         headerMenu.clickOnMenuItem(STUDY);
         var categoryName = headerSubMenuPopup
