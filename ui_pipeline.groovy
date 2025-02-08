@@ -19,12 +19,6 @@ timeout(time: 60, unit: 'MINUTES') {
 
         stage('Publish allure report') {
             allure includeProperties: false, jdk: '', results: [[path: 'build/allure-results']], reportBuildPolicy: 'ALWAYS'
-            // allure(disabled: false,
-            //         includeProperties: false,
-            //         jdk: '',
-            //         results: [[path: "./build/allure-results"]],
-            //         reportBuildPolicy: 'ALWAYS',
-            //         commandline: 'allure')
         }
     }
 }
