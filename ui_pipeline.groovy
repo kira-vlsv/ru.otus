@@ -17,15 +17,14 @@ timeout(time: 60, unit: 'MINUTES') {
             }
         }
 
-        sh "allure generate ./build/allure-results -o ./build/allure-report --clean"
-
         stage('Publish allure report') {
-            allure(disabled: false,
-                    includeProperties: false,
-                    jdk: '',
-                    results: [[path: "./build/allure-results"]],
-                    reportBuildPolicy: 'ALWAYS',
-                    commandline: 'allure')
+            allure includeProperties: false, jdk: '', results: [[path: 'build/allure-results']], reportBuildPolicy: 'ALWAYS'
+            // allure(disabled: false,
+            //         includeProperties: false,
+            //         jdk: '',
+            //         results: [[path: "./build/allure-results"]],
+            //         reportBuildPolicy: 'ALWAYS',
+            //         commandline: 'allure')
         }
     }
 }
